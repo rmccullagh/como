@@ -1,0 +1,11 @@
+/logs/
+/log
+bin/
+/logs/
+/log/
+mvc/
+bin/
+*.log
+*~
+*swp
+*.sh
