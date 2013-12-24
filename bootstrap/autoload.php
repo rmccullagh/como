@@ -14,14 +14,18 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+$ENV = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : NULL;
+switch($ENV) {
+	case 'DEV':
+		define('ENVIROMENT', 'development');
+		error_reporting(-1);
+		break;
+	default:
+		define('ENVIROMENT', 'production');
+	break;
+}
+require  __DIR__ .'/functions.php';
+require  __DIR__.'/SplClassLoader.php';
 
-define('BASE_PATH', realpath(dirname(__FILE__)));
-require __DIR__.'/bootstrap/autoload.php';
-
-$request 		= new CLI\Request($argv);
-$dispatcher = new CLI\Dispatcher($request);
-
-$dispatcher->prepare();
-$dispatcher->execute();
-
+SplClassLoader::autoRegister(NULL, BASE_PATH.'/lib');
 

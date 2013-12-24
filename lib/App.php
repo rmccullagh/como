@@ -14,14 +14,12 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
-define('BASE_PATH', realpath(dirname(__FILE__)));
-require __DIR__.'/bootstrap/autoload.php';
-
-$request 		= new CLI\Request($argv);
-$dispatcher = new CLI\Dispatcher($request);
-
-$dispatcher->prepare();
-$dispatcher->execute();
-
-
+class App {
+	public static function version() {
+		if(file_exists(BASE_PATH.'/version')) {
+			$file = file_get_contents(BASE_PATH.'/version');
+			$version = preg_replace('/[^\d.]/', '', $file);
+			echo $version;
+		}
+	}
+}

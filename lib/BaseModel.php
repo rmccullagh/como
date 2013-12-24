@@ -14,14 +14,13 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
-define('BASE_PATH', realpath(dirname(__FILE__)));
-require __DIR__.'/bootstrap/autoload.php';
-
-$request 		= new CLI\Request($argv);
-$dispatcher = new CLI\Dispatcher($request);
-
-$dispatcher->prepare();
-$dispatcher->execute();
-
-
+use \Database;
+use \Config\Xml;
+abstract class BaseModel {
+	protected $db;
+	protected $config;
+	public function __construct() {
+		$this->db     = Database::getInstance(Xml::getInstance());	
+		$this->config = Xml::getInstance();
+	}
+}

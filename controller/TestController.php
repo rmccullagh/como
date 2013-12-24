@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Copyright 2013 Ryan McCullagh
  *
@@ -15,13 +15,11 @@
  * under the License.
  */
 
-define('BASE_PATH', realpath(dirname(__FILE__)));
-require __DIR__.'/bootstrap/autoload.php';
-
-$request 		= new CLI\Request($argv);
-$dispatcher = new CLI\Dispatcher($request);
-
-$dispatcher->prepare();
-$dispatcher->execute();
-
-
+class TestController extends BaseController {
+	public function __construct() {
+		parent::__construct();
+	}
+	public function init() {
+		echo __CLASS__ . __METHOD__ . PHP_EOL;
+	}
+}

@@ -14,14 +14,28 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+use \ModelFactory;
+use \Config\Xml;
+abstract class BaseController {
+	public function __construct() {
+		$this->modelFactory = new ModelFactory();		
+		$this->config				= Xml::getInstance();
+		$model = str_replace(
+			'Controller', 
+			'Model', 
+			get_class($this)
+		); 
 
-define('BASE_PATH', realpath(dirname(__FILE__)));
-require __DIR__.'/bootstrap/autoload.php';
-
-$request 		= new CLI\Request($argv);
-$dispatcher = new CLI\Dispatcher($request);
-
-$dispatcher->prepare();
-$dispatcher->execute();
-
-
+		if(file_exists(BASE_PATH.'/model/'.$model . '.php')) {
+			$this->model_factory->load(
+				str_replace(
+					'Controller', 
+					'', 
+					get_class($this)
+				)
+			);
+		} else {
+			$this->model = NULL;
+		}
+	} 
+}
