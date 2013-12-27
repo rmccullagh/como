@@ -21,4 +21,7 @@ class VersionController extends BaseController {
 	public function init() {
 		echo App::version() . PHP_EOL;
 	}
+	private function test() {
+		echo "This is a private function\n";
+	}
 }

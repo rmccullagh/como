@@ -92,33 +92,26 @@ class Dispatcher
 			require_once BASE_PATH . '/controller/'.$class.'.php'; 
 			$controller = new $class();
 			$method = str_replace('-','_', $method);
-			if(method_exists($controller, $method))
-			{
-				if($this->args) 
-				{
-					$reflection = new \ReflectionMethod($controller, $method);
-					$arg_count = $reflection->getNumberOfParameters();
-					//echo "argument count: " . $arg_count,  PHP_EOL;
-					//echo "raw argument cout:" . count($this->args), PHP_EOL;
-					if(count($this->args) === $arg_count) {
-						call_user_func_array(array($controller, $method), $this->args);
+			if(method_exists($controller, $method)) {
+				$reflection = new \ReflectionMethod($controller, $method);
+				if($reflection->isPublic()) {
+					if($this->args) {
+						$arg_count = $reflection->getNumberOfParameters();
+						if(count($this->args) === $arg_count) {
+							call_user_func_array(array($controller, $method), $this->args);
+						} else {
+							throw new ArgumentException('Valid method given, but incorrect number of raw arguments passed.');
+						}
 					} else {
-						//$this->show_404('invalid argument count');
-						throw new ArgumentException('Valid method given, but incorrect number of raw arguments passed.');
+						call_user_func(array($controller, $method));
 					}
-				} 
-				else 
-				{
-					call_user_func(array($controller, $method));
+				} else {
+					throw new \Exception('Cannot access private / protected methods');
 				}
-			} 
-			else
-			{
+			} else {
 				$this->show_404('Method not found');
 			}
-		}
-		else
-		{
+		} else {
 			$this->show_404('File not found');
 		}
 	}
