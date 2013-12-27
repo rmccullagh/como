@@ -56,19 +56,12 @@ class Dispatcher
 				$this->method = $mapType[1];				
 			} else {
 				$this->method = 'init';
-			}
-			
-			$args = array_slice($mapType, 2);
-			
+			}			
+			$args = array_slice($mapType, 2);		
 			if(is_array($args)) {
 					foreach($args as $key => $arg)
-						$this->args[] = $arg;
+						$this->args[] = strtolower($arg);
 			}
-			/*
-			if(isset($mapType[2])) {
-				$this->args[] = $mapType[2];
-			}
-			*/
 		} 
 	}
 
@@ -105,7 +98,14 @@ class Dispatcher
 				{
 					$reflection = new \ReflectionMethod($controller, $method);
 					$arg_count = $reflection->getNumberOfParameters();
-					call_user_func_array(array($controller, $method), $this->args);
+					//echo "argument count: " . $arg_count,  PHP_EOL;
+					//echo "raw argument cout:" . count($this->args), PHP_EOL;
+					if(count($this->args) === $arg_count) {
+						call_user_func_array(array($controller, $method), $this->args);
+					} else {
+						//$this->show_404('invalid argument count');
+						throw new ArgumentException('Valid method given, but incorrect number of raw arguments passed.');
+					}
 				} 
 				else 
 				{

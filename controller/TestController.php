@@ -22,4 +22,8 @@ class TestController extends BaseController {
 	public function init() {
 		echo __CLASS__ . __METHOD__ . PHP_EOL;
 	}
+	public function methodWithArgs($arg1, $arg2) {
+		echo '$arg1 = ' . $arg1 . PHP_EOL;
+		echo '$arg2 = ' . $arg2 . PHP_EOL;
+	}
 }
