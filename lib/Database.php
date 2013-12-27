@@ -29,14 +29,14 @@ class Database
 			$name     		= self::$config->database['name'];
 			$user     		= self::$config->database['user'];
 			$password 		= self::$config->database['password'];
-			try {	
+		//	try {	
 				self::$_objInstance = new PDO('mysql:host=localhost;dbname='.$name, $user, $password); 
 				self::$_objInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
 				self::$_objInstance->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 				self::$_objInstance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  PDO::FETCH_ASSOC);
-			} catch (PDOException $e) {
-					exit('Connection failed: ' . $e->getMessage());
-			}	
+			//} catch (PDOException $e) {
+				//	exit('Connection failed: ' . $e->getMessage());
+		//	}	
    }
   	return self::$_objInstance; 
  	}
