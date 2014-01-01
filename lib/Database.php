@@ -16,32 +16,28 @@
  */
 class Database
 {
-  private static $_objInstance;
+ 	private static $_objInstance;
 	private static $config;
-	
 	private function __construct() {} 
 	private function __clone() {} 
   
 	public static function getInstance(\Config\Xml $config) { 
             
-    if(!self::$_objInstance) {
-			self::$config = $config;
-			$name     		= self::$config->database['name'];
-			$user     		= self::$config->database['user'];
-			$password 		= self::$config->database['password'];
-		//	try {	
-				self::$_objInstance = new PDO('mysql:host=localhost;dbname='.$name, $user, $password); 
-				self::$_objInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-				self::$_objInstance->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-				self::$_objInstance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  PDO::FETCH_ASSOC);
-			//} catch (PDOException $e) {
-				//	exit('Connection failed: ' . $e->getMessage());
-		//	}	
-   }
-  	return self::$_objInstance; 
+    		if(!self::$_objInstance) {
+			self::$config	= $config;
+			$name		= self::$config->database['name'];
+			$user		= self::$config->database['user'];
+			$password 	= self::$config->database['password'];
+			
+			self::$_objInstance = new PDO('mysql:host=localhost;dbname='.$name, $user, $password); 
+			self::$_objInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+			self::$_objInstance->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			self::$_objInstance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  PDO::FETCH_ASSOC);
+		}
+  		return self::$_objInstance; 
  	}
 	final public static function __callStatic( $chrMethod, $arrArguments ) { 
-  	$objInstance = self::getInstance(); 
-    return call_user_func_array(array($objInstance, $chrMethod), $arrArguments); 
-  }
+  		$objInstance = self::getInstance(); 
+    		return call_user_func_array(array($objInstance, $chrMethod), $arrArguments); 
+  	}
 }
