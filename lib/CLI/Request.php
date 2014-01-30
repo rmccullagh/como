@@ -16,11 +16,13 @@
  */
 namespace CLI;
 use \CLI\ArgumentException;
+use \Cavalry\Log;
 class Request {
 	protected $uri;
 	protected $arguments;
 
-	public function __construct($argv) {
+        public function __construct($argv) {
+                Log::getInstance()->push(__METHOD__, "Loaded Request");
 		$this->arguments = $argv;
 		$this->parse();	
 	}
