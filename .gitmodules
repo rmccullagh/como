@@ -1,0 +1,3 @@
+[submodule "monolog"]
+	path = monolog
+	url = git@github.com:Seldaek/monolog.git
